@@ -1,6 +1,9 @@
 class Lexer:
     def __init__(self, source):
-        pass
+        self.source = source + '\n' #append newline to simplify lexing
+        self.curChar = ''
+        self.curPos = -1
+        self.nextChar()
 
     def nexChar(self):
         pass
