@@ -30,4 +30,20 @@ class Lexer:
         pass
 
     def getToken(self):
-        pass
+        if self.curChar == '+':
+            pass
+        elif self.curChar == '-':
+            pass
+        elif self.curChar == '*':
+            pass
+        elif self.curChar == '/':
+            pass
+        elif self.curChar == '\n':
+            pass
+        elif self.curChar == '\0':
+            pass
+        else:
+            pass
+        
+
+        self.nextChar()
