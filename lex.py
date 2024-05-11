@@ -6,7 +6,11 @@ class Lexer:
         self.nextChar()
 
     def nexChar(self):
-        pass
+        self.curPos += 1
+        if self.curPos >= len(self.source):
+            self.curChar = '\0' #EOF
+        else:
+            self.curChar = self.source[self.curPos]
 
     def peek(self):
         pass
