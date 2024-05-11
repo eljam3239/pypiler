@@ -5,7 +5,7 @@ class Lexer:
         self.curPos = -1
         self.nextChar()
 
-    def nexChar(self):
+    def nextChar(self):
         self.curPos += 1
         if self.curPos >= len(self.source):
             self.curChar = '\0' #EOF
