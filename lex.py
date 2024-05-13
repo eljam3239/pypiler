@@ -33,22 +33,23 @@ class Lexer:
 
     def getToken(self):
         if self.curChar == '+':
-            pass
+            token = Token(self.curChar, TokenType.PLUS)
         elif self.curChar == '-':
-            pass
+            token = Token(self.curChar, TokenType.MINUS)
         elif self.curChar == '*':
-            pass
+            token = Token(self.curChar, TokenType.ASTERISK)
         elif self.curChar == '/':
-            pass
+            token = Token(self.curChar, TokenType.SLASH)
         elif self.curChar == '\n':
-            pass
+            token = Token(self.curChar, TokenType.NEWLINE)
         elif self.curChar == '\0':
-            pass
+            token = Token(self.curChar, TokenType.EOF)
         else:
             pass
         
 
         self.nextChar()
+        return token
 
 class Token:
     def __init__(self, tokenText, tokenKind):
