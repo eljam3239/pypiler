@@ -32,6 +32,8 @@ class Lexer:
         pass
 
     def getToken(self):
+        token = None
+
         if self.curChar == '+':
             token = Token(self.curChar, TokenType.PLUS)
         elif self.curChar == '-':
