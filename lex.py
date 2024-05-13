@@ -1,3 +1,5 @@
+import enum
+
 class Lexer:
     def __init__(self, source):
         self.source = source + '\n' #append newline to simplify lexing
@@ -47,3 +49,10 @@ class Lexer:
         
 
         self.nextChar()
+
+class Token:
+    def __init__(self, tokenText, tokenKind):
+        self.text = tokenText
+        self.kind = tokenKind
+
+
