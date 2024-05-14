@@ -27,14 +27,17 @@ class Lexer:
         sys.exit("Lexing error. " + message)
 
     def skipWhiteSpace(self):
-        pass
+        while self.curChar == ' ' or self.curChar == '\t' or self.curChar == '\r':
+            self.nextChar()
 
     def skipComment(self):
         pass
 
     def getToken(self):
-        token = None
+        self.skipWhiteSpace()
 
+        token = None
+        
         if self.curChar == '+':
             token = Token(self.curChar, TokenType.PLUS)
         elif self.curChar == '-':
