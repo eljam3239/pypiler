@@ -9,7 +9,7 @@ def main():
         print(lexer.curChar)
         lexer.nextChar()
     """
-    source = "+- */"
+    source = "+- */>>= = !="
     lexer = Lexer(source)
     token = lexer.getToken()
     while token.kind != TokenType.EOF:
