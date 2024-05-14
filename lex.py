@@ -54,7 +54,7 @@ class Lexer:
             else:
                 token = Token(self.curChar, TokenType.EQ)
         elif self.curChar == '>':
-            if self.peek == '=':
+            if self.peek() == '=':
                 lastChar = self.curChar
                 self.nextChar()
                 token = Token(lastChar + self.curChar, TokenType.GTEQ)
