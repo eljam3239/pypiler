@@ -1,6 +1,7 @@
 class Token:
-    def __init__(self, tokenText, tokenKing):
+    def __init__(self, tokenText, tokenKind):
         self.text = tokenText
-        self.king = tokenKind
+        self.kind = tokenKind
 
+    
 

@@ -34,7 +34,7 @@ class Lexer:
         if self.curChar == '#':
             while self.curChar != '\n':
                 self.nextChar()
-            
+    
 
     def getToken(self):
         self.skipWhiteSpace()
@@ -98,12 +98,26 @@ class Lexer:
             if self.peek() == '.':
                 self.nextChar()
                 if not self.peek().isdigit():
-                    self.abort("Illeggal character in number")
+                    self.abort("Illegal character in number")
                 while self.peek().isdigit():
                     self.nextChar()
             tokText = self.source[startPos: self.curPos+1]
             token = Token(tokText, TokenType.NUMBER)
         
+        elif self.curChar.isalpha():
+            # Leading character is a letter, so this must be an identifier or a keyword.
+            # Get all consecutive alpha numeric characters.
+            startPos = self.curPos
+            while self.peek().isalnum():
+                self.nextChar()
+
+            # Check if the token is in the list of keywords.
+            tokText = self.source[startPos : self.curPos + 1] # Get the substring.
+            keyword = Token.checkIfKeyword(tokText)
+            if keyword == None: # Identifier
+                token = Token(tokText, TokenType.IDENT)
+            else:   # Keyword
+                token = Token(tokText, keyword)
         else:
             self.abort("Unknown token: " + self.curChar)
         
@@ -115,6 +129,12 @@ class Token:
     def __init__(self, tokenText, tokenKind):
         self.text = tokenText
         self.kind = tokenKind
+    @staticmethod
+    def checkIfKeyword(tokenText):
+        for kind in TokenType:
+            if kind.name == tokenText and kind.value >=100 and kind.value <200:
+                return kind
+        return None
 class TokenType(enum.Enum):
     EOF = -1
     NEWLINE = 0
