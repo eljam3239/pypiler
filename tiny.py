@@ -9,7 +9,9 @@ def main():
         print(lexer.curChar)
         lexer.nextChar()
     """
-    source = "+- */>>= = !="
+    #source = "+- */>>= = !="
+    #source = "+ =#This is a comment!\n */"
+    source = "+- \"This is a string\" # This is a comment!\n */"
     lexer = Lexer(source)
     token = lexer.getToken()
     while token.kind != TokenType.EOF:
