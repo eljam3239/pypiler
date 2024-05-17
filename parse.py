@@ -34,3 +34,21 @@ class Parser:
         # Parse all the statements in the program.
         while not self.checkToken(TokenType.EOF):
             self.statement()
+
+    def statement(self):
+        # Check the first token to see what kind of statement this is.
+
+        # "PRINT" (expression | string)
+        if self.checkToken(TokenType.PRINT):
+            print("STATEMENT-PRINT")
+            self.nextToken()
+
+            if self.checkToken(TokenType.STRING):
+                # Simple string.
+                self.nextToken()
+            else:
+                # Expect an expression.
+                self.expression()
+
+        # Newline.
+        self.nl()
