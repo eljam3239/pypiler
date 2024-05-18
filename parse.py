@@ -52,3 +52,12 @@ class Parser:
 
         # Newline.
         self.nl()
+
+    def nl(self):
+        print("NEWLINE")
+		
+        # Require at least one newline.
+        self.match(TokenType.NEWLINE)
+        # But we will allow extra newlines too, of course.
+        while self.checkToken(TokenType.NEWLINE):
+            self.nextToken()
