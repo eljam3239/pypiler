@@ -2,7 +2,6 @@ from lex import *
 from parse import *
 import sys
 
-
 def main():
     print("Compiler")
     
@@ -12,7 +11,7 @@ def main():
         source = inputFile.read()
 
     lexer = Lexer(source)
-    parser = Parser(source)
+    parser = Parser(lexer)
     
     parser.program()
     print("Parsing completed")
