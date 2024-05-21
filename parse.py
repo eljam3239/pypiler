@@ -49,6 +49,17 @@ class Parser:
             else:
                 # Expect an expression.
                 self.expression()
+        elif self.checkToken(TokenType.IF):
+            print("STATEMENT-IF")
+            self.nextToken()
+            self.comparison()
+
+            self.match(TokenType.THEN)
+            self.nl()
+
+            while not self.checkToken(TokenType.ENDIF):
+                self.statment()
+            self.match(TokenType.ENDIF)
 
         # Newline.
         self.nl()
