@@ -73,6 +73,30 @@ class Parser:
                 self.statement()
             self.match(TokenType.ENDWHILE)
 
+        elif self.checkToken(TokenType.LABEL):
+            print("STATEMENT-LABEL")
+            self.nextToken()
+            self.match(TokenType.IDENT)
+        
+        elif self.checkToken(TokenType.GOTO):
+            print("STATEMENT-GOTO")
+            self.nextToken()
+            self.match(TokenType.IDENT)
+        
+        elif self.checkToken(TokenType.LET):
+            print("STATEMENT-LET")
+            self.nextToken()
+            self.match(TokenType.IDENT)
+            self.match(TokenType.EQ)
+            self.expression()
+
+        elif self.checkToken(TokenType.INPUT):
+            print("STATEMENT-INPUT")
+            self.nextToken()
+            self.match(TokenType.IDENT)
+        else:
+            self.abort("Invalid statement at " + self.curToken.text + " (" + self.curToken.kind.name + ")")
+
         # Newline.
         self.nl()
 
