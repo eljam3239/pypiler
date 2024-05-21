@@ -31,6 +31,8 @@ class Parser:
     def program(self):
         print("PROGRAM")
 
+        while self.checkToken(TokenType.NEWLINE):
+            self.nextToken()
         # Parse all the statements in the program.
         while not self.checkToken(TokenType.EOF):
             self.statement()
