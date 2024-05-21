@@ -60,6 +60,18 @@ class Parser:
             while not self.checkToken(TokenType.ENDIF):
                 self.statment()
             self.match(TokenType.ENDIF)
+        
+        elif self.checkToken(TokenType.WHILE):
+            print("STATEMENT-WHILE")
+            self.nextToken()
+            self.comparison()
+
+            self.match(TokenType.REPEAT)
+            self.nl()
+
+            while not self.checkToken(TokenType.ENDWHILE):
+                self.statement()
+            self.match(TokenType.ENDWHILE)
 
         # Newline.
         self.nl()
