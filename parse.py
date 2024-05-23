@@ -92,6 +92,7 @@ class Parser:
         elif self.checkToken(TokenType.GOTO):
             print("STATEMENT-GOTO")
             self.nextToken()
+            self.labelsGotoed.add(self.curToken.text)
             self.match(TokenType.IDENT)
         
         elif self.checkToken(TokenType.LET):
