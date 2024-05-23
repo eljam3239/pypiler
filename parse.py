@@ -83,6 +83,10 @@ class Parser:
         elif self.checkToken(TokenType.LABEL):
             print("STATEMENT-LABEL")
             self.nextToken()
+            if self.curToken.text in self.labelDeclared:
+                self.abort("Label already exists: " + self.curToken.text)
+            self.labelDeclared.add(self.curToken.text)
+
             self.match(TokenType.IDENT)
         
         elif self.checkToken(TokenType.GOTO):
