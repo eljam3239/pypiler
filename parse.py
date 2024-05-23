@@ -112,6 +112,8 @@ class Parser:
         elif self.checkToken(TokenType.INPUT):
             print("STATEMENT-INPUT")
             self.nextToken()
+            if self.curToken.text not in self.symbols:
+                self.symbols.add(self.curToken.text)
             self.match(TokenType.IDENT)
         else:
             self.abort("Invalid statement at " + self.curToken.text + " (" + self.curToken.kind.name + ")")
