@@ -139,6 +139,15 @@ class Parser:
             self.nextToken()
         self.primary()
 
+    def primary(self):
+        print("Primary (" + self.curToken.text + ")")
+        if self.checkToken(TokenType.NUMBER):
+            self.nextToken()
+        elif self.checkToken(TokenType.IDENT):
+            self.nextToken()
+        else:
+            self.abort("Unexpected token at " + self.curToken.text)
+
     def nl(self):
         print("NEWLINE")
 		
