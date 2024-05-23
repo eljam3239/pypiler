@@ -102,6 +102,9 @@ class Parser:
         elif self.checkToken(TokenType.LET):
             print("STATEMENT-LET")
             self.nextToken()
+
+            if self.curToken.text not in self.symbols:
+                self.symbols.add(self.curToken.text)
             self.match(TokenType.IDENT)
             self.match(TokenType.EQ)
             self.expression()
