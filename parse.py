@@ -41,6 +41,10 @@ class Parser:
         # Parse all the statements in the program.
         while not self.checkToken(TokenType.EOF):
             self.statement()
+        
+        for label in self.labelsGotoed:
+            if label not in self.labelDeclared:
+                self.abort("Attempting to GOGTO to undeclared label: " + label)
 
     def statement(self):
         # Check the first token to see what kind of statement this is.
