@@ -125,6 +125,13 @@ class Parser:
             self.nextToken()
             self.term()
     
+    def term(self):
+        print("TERM")
+
+        self.unary()
+        while self.checkToken(TokenType.ASTERISK) or self.checkToken(TokenType.SLASH):
+            self.nextToken()
+            self.unary()
 
     def nl(self):
         print("NEWLINE")
