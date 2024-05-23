@@ -133,6 +133,12 @@ class Parser:
             self.nextToken()
             self.unary()
 
+    def unary(self):
+        print("UNARY")
+        if self.checkToken(TokenType.PLUS) or self.checkToken(TokenType.MINUS):
+            self.nextToken()
+        self.primary()
+
     def nl(self):
         print("NEWLINE")
 		
