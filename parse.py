@@ -4,6 +4,11 @@ from lex import *
 class Parser:
     def __init__(self, lexer):
         self.lexer = lexer
+
+        self.symbols = set()
+        self.labelDeclared = set()
+        self.labelsGotoed = set()
+
         self.curToken = None
         self.peekToken = None
         self.nextToken()
@@ -60,7 +65,7 @@ class Parser:
             self.nl()
 
             while not self.checkToken(TokenType.ENDIF):
-                self.statment()
+                self.statement()
             self.match(TokenType.ENDIF)
         
         elif self.checkToken(TokenType.WHILE):
