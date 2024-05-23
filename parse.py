@@ -163,6 +163,8 @@ class Parser:
         if self.checkToken(TokenType.NUMBER):
             self.nextToken()
         elif self.checkToken(TokenType.IDENT):
+            if self.curToken.text not in self.symbols:
+                self.abort("Referenceing variable before assignment: " + self.curToken.text)
             self.nextToken()
         else:
             self.abort("Unexpected token at " + self.curToken.text)
