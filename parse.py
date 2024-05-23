@@ -102,6 +102,18 @@ class Parser:
         # Newline.
         self.nl()
 
+    def comparison(self):
+        print("comparison")
+        self.expression()
+        if self.isComparisonOperator():
+            self.nextToken()
+            self.expression()
+        else:
+            self.abort("Expected comparison operator at: " + self.curToken.text)
+        while self.isComparisonOperator():
+            self.nextToken()
+            self.expression() 
+
     def nl(self):
         print("NEWLINE")
 		
