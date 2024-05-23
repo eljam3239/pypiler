@@ -114,6 +114,9 @@ class Parser:
             self.nextToken()
             self.expression() 
 
+    def isComparisonOperator(self):
+        return self.checkToken(TokenType.GT) or self.checkToken(TokenType.GTEQ) or self.checkToken(TokenType.LT) or self.checkToken(TokenType.LTEQ) or self.checkToken(TokenType.EQEQ) or self.checkToken(TokenType.NOTEQ) 
+
     def nl(self):
         print("NEWLINE")
 		
