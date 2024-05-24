@@ -4,6 +4,11 @@ from lex import *
 class Parser:
     def __init__(self, lexer):
         self.lexer = lexer
+
+        self.symbols = set()
+        self.labelDeclared = set()
+        self.labelsGotoed = set()
+
         self.curToken = None
         self.peekToken = None
         self.nextToken()
@@ -36,6 +41,10 @@ class Parser:
         # Parse all the statements in the program.
         while not self.checkToken(TokenType.EOF):
             self.statement()
+        
+        for label in self.labelsGotoed:
+            if label not in self.labelDeclared:
+                self.abort("Attempting to GOGTO to undeclared label: " + label)
 
     def statement(self):
         # Check the first token to see what kind of statement this is.
@@ -60,7 +69,7 @@ class Parser:
             self.nl()
 
             while not self.checkToken(TokenType.ENDIF):
-                self.statment()
+                self.statement()
             self.match(TokenType.ENDIF)
         
         elif self.checkToken(TokenType.WHILE):
@@ -78,16 +87,24 @@ class Parser:
         elif self.checkToken(TokenType.LABEL):
             print("STATEMENT-LABEL")
             self.nextToken()
+            if self.curToken.text in self.labelDeclared:
+                self.abort("Label already exists: " + self.curToken.text)
+            self.labelDeclared.add(self.curToken.text)
+
             self.match(TokenType.IDENT)
         
         elif self.checkToken(TokenType.GOTO):
             print("STATEMENT-GOTO")
             self.nextToken()
+            self.labelsGotoed.add(self.curToken.text)
             self.match(TokenType.IDENT)
         
         elif self.checkToken(TokenType.LET):
             print("STATEMENT-LET")
             self.nextToken()
+
+            if self.curToken.text not in self.symbols:
+                self.symbols.add(self.curToken.text)
             self.match(TokenType.IDENT)
             self.match(TokenType.EQ)
             self.expression()
@@ -95,12 +112,62 @@ class Parser:
         elif self.checkToken(TokenType.INPUT):
             print("STATEMENT-INPUT")
             self.nextToken()
+            if self.curToken.text not in self.symbols:
+                self.symbols.add(self.curToken.text)
             self.match(TokenType.IDENT)
         else:
             self.abort("Invalid statement at " + self.curToken.text + " (" + self.curToken.kind.name + ")")
 
         # Newline.
         self.nl()
+
+    def comparison(self):
+        print("comparison")
+        self.expression()
+        if self.isComparisonOperator():
+            self.nextToken()
+            self.expression()
+        else:
+            self.abort("Expected comparison operator at: " + self.curToken.text)
+        while self.isComparisonOperator():
+            self.nextToken()
+            self.expression() 
+
+    def isComparisonOperator(self):
+        return self.checkToken(TokenType.GT) or self.checkToken(TokenType.GTEQ) or self.checkToken(TokenType.LT) or self.checkToken(TokenType.LTEQ) or self.checkToken(TokenType.EQEQ) or self.checkToken(TokenType.NOTEQ) 
+
+    def expression(self):
+        print("Expression")
+        self.term()
+
+        while self.checkToken(TokenType.PLUS) or self.checkToken(TokenType.MINUS):
+            self.nextToken()
+            self.term()
+    
+    def term(self):
+        print("TERM")
+
+        self.unary()
+        while self.checkToken(TokenType.ASTERISK) or self.checkToken(TokenType.SLASH):
+            self.nextToken()
+            self.unary()
+
+    def unary(self):
+        print("UNARY")
+        if self.checkToken(TokenType.PLUS) or self.checkToken(TokenType.MINUS):
+            self.nextToken()
+        self.primary()
+
+    def primary(self):
+        print("Primary (" + self.curToken.text + ")")
+        if self.checkToken(TokenType.NUMBER):
+            self.nextToken()
+        elif self.checkToken(TokenType.IDENT):
+            if self.curToken.text not in self.symbols:
+                self.abort("Referenceing variable before assignment: " + self.curToken.text)
+            self.nextToken()
+        else:
+            self.abort("Unexpected token at " + self.curToken.text)
 
     def nl(self):
         print("NEWLINE")
