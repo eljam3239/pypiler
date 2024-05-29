@@ -4,6 +4,7 @@ class Emitter:
         self.header = ""
         self.code = ""
 
+
     def emit(self, code):
         self.code += code
 
