@@ -34,7 +34,10 @@ class Parser:
 
     # program ::= {statement}
     def program(self):
-        print("PROGRAM")
+        #print("PROGRAM")
+        self.emitter.headerLine("#include <stdio.h>")
+        self.emitter.headerLine("int main(void){")
+
 
         while self.checkToken(TokenType.NEWLINE):
             self.nextToken()
@@ -42,6 +45,9 @@ class Parser:
         while not self.checkToken(TokenType.EOF):
             self.statement()
         
+        self.emitter.emitLine("return 0;")
+        self.emitter.emitLine("}")
+
         for label in self.labelsGotoed:
             if label not in self.labelDeclared:
                 self.abort("Attempting to GOGTO to undeclared label: " + label)
