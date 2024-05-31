@@ -3,5 +3,4 @@
 #IF foo > 0 THEN
     #PRINT "yes!"
 #ENDIF
-PRINT index
-GOTO main
+

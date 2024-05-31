@@ -66,7 +66,9 @@ class Parser:
                 self.nextToken()
             else:
                 # Expect an expression.
+                self.emitter.emit("printf(\"" + self.curToken.text + "\\n\";")
                 self.expression()
+                self.emitter.emitLine("));")
         elif self.checkToken(TokenType.IF):
             print("STATEMENT-IF")
             self.nextToken()
