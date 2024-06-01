@@ -72,14 +72,17 @@ class Parser:
         elif self.checkToken(TokenType.IF):
             print("STATEMENT-IF")
             self.nextToken()
+            self.emitter.emit("if(")
             self.comparison()
 
             self.match(TokenType.THEN)
             self.nl()
+            self.emitter.emitLine("){")
 
             while not self.checkToken(TokenType.ENDIF):
                 self.statement()
             self.match(TokenType.ENDIF)
+            self.emitter.emitLine("}")
         
         elif self.checkToken(TokenType.WHILE):
             print("STATEMENT-WHILE")
