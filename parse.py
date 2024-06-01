@@ -87,14 +87,17 @@ class Parser:
         elif self.checkToken(TokenType.WHILE):
             print("STATEMENT-WHILE")
             self.nextToken()
+            self.emitter.emit("while(")
             self.comparison()
 
             self.match(TokenType.REPEAT)
             self.nl()
+            self.emitter.emitLine("){")
 
             while not self.checkToken(TokenType.ENDWHILE):
                 self.statement()
             self.match(TokenType.ENDWHILE)
+            self.emitter.emitLine("}")
 
         elif self.checkToken(TokenType.LABEL):
             print("STATEMENT-LABEL")
