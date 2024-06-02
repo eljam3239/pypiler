@@ -106,6 +106,7 @@ class Parser:
                 self.abort("Label already exists: " + self.curToken.text)
             self.labelDeclared.add(self.curToken.text)
 
+            self.emitter.emitLine(self.curToken.text + ":")
             self.match(TokenType.IDENT)
         
         elif self.checkToken(TokenType.GOTO):
