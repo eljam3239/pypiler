@@ -100,7 +100,7 @@ class Parser:
             self.emitter.emitLine("}")
 
         elif self.checkToken(TokenType.LABEL):
-            print("STATEMENT-LABEL")
+            #print("STATEMENT-LABEL")
             self.nextToken()
             if self.curToken.text in self.labelDeclared:
                 self.abort("Label already exists: " + self.curToken.text)
@@ -110,9 +110,10 @@ class Parser:
             self.match(TokenType.IDENT)
         
         elif self.checkToken(TokenType.GOTO):
-            print("STATEMENT-GOTO")
+            #print("STATEMENT-GOTO")
             self.nextToken()
             self.labelsGotoed.add(self.curToken.text)
+            self.emitter.emitLine("goto " + self.curToken.text + ";")
             self.match(TokenType.IDENT)
         
         elif self.checkToken(TokenType.LET):
