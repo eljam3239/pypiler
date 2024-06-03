@@ -58,15 +58,16 @@ class Parser:
 
         # "PRINT" (expression | string)
         if self.checkToken(TokenType.PRINT):
-            print("STATEMENT-PRINT")
+            #print("STATEMENT-PRINT")
             self.nextToken()
 
             if self.checkToken(TokenType.STRING):
                 # Simple string.
+                self.emitter.emitLine("printf(\"" + self.curToken.text + "\\n\");")
                 self.nextToken()
             else:
                 # Expect an expression.
-                self.emitter.emit("printf(\"" + self.curToken.text + "\\n\";")
+                self.emitter.emit("printf(\"%" + ".2f\\n\", (float)(")
                 self.expression()
                 self.emitter.emitLine("));")
         elif self.checkToken(TokenType.IF):
@@ -181,7 +182,7 @@ class Parser:
 
         self.unary()
         while self.checkToken(TokenType.ASTERISK) or self.checkToken(TokenType.SLASH):
-            self.emiitter.emit(self.curToken.text)
+            self.emitter.emit(self.curToken.text)
             self.nextToken()
             self.unary()
 
@@ -206,7 +207,7 @@ class Parser:
             self.abort("Unexpected token at " + self.curToken.text)
 
     def nl(self):
-        print("NEWLINE")
+        #print("NEWLINE")
 		
         # Require at least one newline.
         self.match(TokenType.NEWLINE)
