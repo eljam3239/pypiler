@@ -151,14 +151,16 @@ class Parser:
         self.nl()
 
     def comparison(self):
-        print("comparison")
+        #print("comparison")
         self.expression()
         if self.isComparisonOperator():
+            self.emitter.emit(self.curToken.text)
             self.nextToken()
             self.expression()
         else:
             self.abort("Expected comparison operator at: " + self.curToken.text)
         while self.isComparisonOperator():
+            self.emitter.emit(self.curToken.text)
             self.nextToken()
             self.expression() 
 
