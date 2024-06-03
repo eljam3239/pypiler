@@ -168,24 +168,27 @@ class Parser:
         return self.checkToken(TokenType.GT) or self.checkToken(TokenType.GTEQ) or self.checkToken(TokenType.LT) or self.checkToken(TokenType.LTEQ) or self.checkToken(TokenType.EQEQ) or self.checkToken(TokenType.NOTEQ) 
 
     def expression(self):
-        print("Expression")
+        #print("Expression")
         self.term()
 
         while self.checkToken(TokenType.PLUS) or self.checkToken(TokenType.MINUS):
+            self.emitter.emit(self.curToken.text)
             self.nextToken()
             self.term()
     
     def term(self):
-        print("TERM")
+        #print("TERM")
 
         self.unary()
         while self.checkToken(TokenType.ASTERISK) or self.checkToken(TokenType.SLASH):
+            self.emiitter.emit(self.curToken.text)
             self.nextToken()
             self.unary()
 
     def unary(self):
-        print("UNARY")
+        #print("UNARY")
         if self.checkToken(TokenType.PLUS) or self.checkToken(TokenType.MINUS):
+            self.emitter.emit(self.curToken.text)
             self.nextToken()
         self.primary()
 
