@@ -132,10 +132,17 @@ class Parser:
             self.emitter.emitLine(";")
 
         elif self.checkToken(TokenType.INPUT):
-            print("STATEMENT-INPUT")
+            #print("STATEMENT-INPUT")
             self.nextToken()
             if self.curToken.text not in self.symbols:
                 self.symbols.add(self.curToken.text)
+                self.emitter.headerLine("float " + self.curToken.text + ";")
+            
+            self.emitter.emitLine("if() == scanf(\"%" + "f\", &" + self.curToken.text + ")) {")
+            self.emitter.emitLine(self.curToken.text + " = 0;")
+            self.emitter.emit("scanf(\"%")
+            self.emitter.emitLine("*s\");")
+            self.emitter.emitLine("}")
             self.match(TokenType.IDENT)
         else:
             self.abort("Invalid statement at " + self.curToken.text + " (" + self.curToken.kind.name + ")")
