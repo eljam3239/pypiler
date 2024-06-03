@@ -17,6 +17,6 @@ def main():
     
     parser.program()
     emitter.writeFile()
-    print("Parsing completed")
+    print("Compiling completed.")
 
 main()
