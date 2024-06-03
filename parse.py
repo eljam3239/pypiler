@@ -71,7 +71,7 @@ class Parser:
                 self.expression()
                 self.emitter.emitLine("));")
         elif self.checkToken(TokenType.IF):
-            print("STATEMENT-IF")
+            #print("STATEMENT-IF")
             self.nextToken()
             self.emitter.emit("if(")
             self.comparison()
@@ -86,7 +86,7 @@ class Parser:
             self.emitter.emitLine("}")
         
         elif self.checkToken(TokenType.WHILE):
-            print("STATEMENT-WHILE")
+            #print("STATEMENT-WHILE")
             self.nextToken()
             self.emitter.emit("while(")
             self.comparison()
@@ -123,7 +123,7 @@ class Parser:
 
             if self.curToken.text not in self.symbols:
                 self.symbols.add(self.curToken.text)
-                self.emitter.headerLine("float" + self.curToken.text + ";")
+                self.emitter.headerLine("float " + self.curToken.text + ";")
             
             self.emitter.emit(self.curToken.text + " = ")
             self.match(TokenType.IDENT)
@@ -139,7 +139,7 @@ class Parser:
                 self.symbols.add(self.curToken.text)
                 self.emitter.headerLine("float " + self.curToken.text + ";")
             
-            self.emitter.emitLine("if() == scanf(\"%" + "f\", &" + self.curToken.text + ")) {")
+            self.emitter.emitLine("if(0 == scanf(\"%" + "f\", &" + self.curToken.text + ")) {")
             self.emitter.emitLine(self.curToken.text + " = 0;")
             self.emitter.emit("scanf(\"%")
             self.emitter.emitLine("*s\");")
